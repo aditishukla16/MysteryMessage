@@ -6,13 +6,20 @@ export async function sendVerificationEmail(
     email: string,
     username:string,
     verifyCode: string
-):<ApiResponse>{
+):Promise<ApiResponse>{
     try {
+        await resend.emails.send({
+            from: 'you@example.com',
+            to: email,
+            subject:'Mystery Message | Verification Code',
+            react: <VerificationEmail username={username} otp={verifyCode} />,
+,
+        });
         return{success: true,message:'Verification email send successfully'}
         
     } catch (emailError) {
         console.error("Error sending verification email",emailError)
-        return{success:false,messafe:"Failed to send verfication email"}
+        return {success:false,message:"Failed to send verfication email"}
     }
 }
     
