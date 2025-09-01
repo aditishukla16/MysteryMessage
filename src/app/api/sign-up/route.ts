@@ -7,7 +7,11 @@ import bcrypt from "bcryptjs";
 export async function POST(request:Request){
     await dbConnect()
     try {
-        
+       const{username,email,pasword}= await request.json()
+        UserModel.findOne({
+            username,
+            isVerified:true
+        })
     } catch (error) {
         console.error('Error registering user',error)
         return Response.json(
