@@ -12,6 +12,14 @@ export async function POST(request:Request){
             username,
             isVerified:true
         })
+        if(existingUserVerifiedByUsername){
+            return Response.json({
+                success:false,
+                mesaage: "Username is already taken"
+            },{status:400})
+        }
+     
+        const existingUserByEmail = await UserModel.findOne({email})
     } catch (error) {
         console.error('Error registering user',error)
         return Response.json(
