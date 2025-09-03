@@ -20,6 +20,14 @@ export async function POST(request:Request){
         }
      
         const existingUserByEmail = await UserModel.findOne({email})
+
+        if(existingUserByEmail){
+            true
+        }else{
+           const hashedPassword = await bcrypt.hash(password,10)
+           const expiryDate = new date()
+           expiryDate.setHours(expiryDate.getHours()+1)
+        }
     } catch (error) {
         console.error('Error registering user',error)
         return Response.json(
